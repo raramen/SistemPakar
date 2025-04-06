@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Pemeriksaan Jantung</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            margin: auto;
+            text-align: left;
+        }
+        h2 {
+            color: #333;
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+        }
+        select, input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Form Pemeriksaan Risiko Penyakit Jantung</h2>
+        <form method="POST">
+            {% for key, label in numerical_features.items() %}
+                <div class="form-group">
+                    <label for="{{ key }}">{{ label }}</label>
+                    <input type="number" name="{{ key }}" id="{{ key }}" required>
+                </div>
+            {% endfor %}
+
+            {% for key, label in categorical_features.items() %}
+                <div class="form-group">
+                    <label for="{{ key }}">{{ label }}</label>
+                    <select name="{{ key }}" id="{{ key }}" required>
+                        {% for option_key, option_value in categorical_options[key].items() %}
+                            <option value="{{ option_key }}">{{ option_value }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            {% endfor %}
+
+            <button type="submit">Kirim</button>
+        </form>
+    </div>
+</body>
+</html>

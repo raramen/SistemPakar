@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Form Risiko Jantung</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+    background: linear-gradient(to right, #e0eafc, #cfdef3);
+    min-height: 100vh;
+    padding-top: 60px;
+    }
+
+    .step {
+    display: none;
+    }
+
+    .step.active {
+    display: block;
+    }
+
+    .card-question {
+    border-radius: 16px;
+    padding: 1.2rem 1.5rem;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+    margin: 0 auto 1.5rem auto;
+    max-width: 500px; /* batasi lebar maksimal */
+    background-color: #ffffff;
+    }
+
+    .card-question h4 {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    }
+
+    .form-control,
+    .form-select {
+    border-radius: 10px;
+    font-size: 0.95rem;
+    }
+
+    .navigation-buttons {
+    max-width: 500px;
+    margin: -1rem auto 2rem auto; /* mengurangi jarak vertikal */
+    display: flex;
+    justify-content: space-between;
+    }
+
+  </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+  <div class="container-fluid">
+    <a class="navbar-brand fw-bold" href="#">Cek Risiko Jantung</a>
+  </div>
+</nav>
+
+<div class="container">
+  <h2 class="text-center my-4">Form Analisis Risiko Penyakit Jantung</h2>
+  <form method="post" id="multiStepForm">
+    <!-- Semua step dalam bentuk card -->
+    <div class="step active">
+      <div class="card card-question">
+        <h4>Usia</h4>
+        <input type="number" name="age" class="form-control" placeholder="Masukkan usia Anda" required>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="card card-question">
+        <h4>Tekanan Darah Istirahat</h4>
+        <div class="row">
+          <div class="col-md-6">
+            <label for="sistol">Sistol (mmHg)</label>
+            <input type="number" name="sistol" id="sistol" class="form-control" required>
+          </div>
+          <div class="col-md-6">
+            <label for="diastol">Diastol (mmHg)</label>
+            <input type="number" name="diastol" id="diastol" class="form-control" required>
+          </div>
+        </div>
+        <small class="text-muted">Normal: Sistol 90–120 mmHg, Diastol 60–80 mmHg</small>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="card card-question">
+        <h4>Kadar Kolesterol (mg/dL)</h4>
+        <input type="number" name="chol" class="form-control" required>
+        <small class="text-muted">Normal: 100–200 mg/dL</small>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="card card-question">
+        <h4>Detak Jantung Maksimum</h4>
+        <input type="number" name="thalach" class="form-control" required>
+        <small class="text-muted">Normal: 70–210 bpm</small>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="card card-question">
+        <h4>Depresi ST Akibat Olahraga</h4>
+        <input type="number" name="oldpeak" class="form-control" step="0.1" required>
+        <small class="text-muted">Normal: 0.0 – 2.0</small>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="card card-question">
+        <h4>Jenis Kelamin</h4>
+        <select name="sex" class="form-select" required>
+          <option value="1">Laki-laki</option>
+          <option value="0">Perempuan</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="card card-question">
+        <h4>Jenis Nyeri Dada</h4>
+        <select name="cp" class="form-select" required>
+          <option value="0">Tidak ada nyeri</option>
+          <option value="1">Angina ringan</option>
+          <option value="2">Angina sedang</option>
+          <option value="3">Angina berat</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="card card-question">
+        <h4>Gula Darah Puasa > 120 mg/dL</h4>
+        <select name="fbs" class="form-select" required>
+          <option value="0">Tidak</option>
+          <option value="1">Ya</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="card card-question">
+        <h4>Hasil Elektrokardiografi</h4>
+        <select name="restecg" class="form-select" required>
+          <option value="0">Normal</option>
+          <option value="1">Kelainan ST-T</option>
+          <option value="2">Hipertrofi ventrikel kiri</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="card card-question">
+        <h4>Angina Saat Olahraga</h4>
+        <select name="exang" class="form-select" required>
+          <option value="0">Tidak</option>
+          <option value="1">Ya</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="card card-question">
+        <h4>Kemiringan ST (Slope)</h4>
+        <select name="slope" class="form-select" required>
+          <option value="0">Menanjak</option>
+          <option value="1">Datar</option>
+          <option value="2">Menurun</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="card card-question">
+        <h4>Jumlah Pembuluh Darah yang Terdeteksi</h4>
+        <select name="ca" class="form-select" required>
+          <option value="0">0</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="card card-question">
+        <h4>Thalassemia</h4>
+        <select name="thal" class="form-select" required>
+          <option value="1">Normal</option>
+          <option value="2">Fixed Defect</option>
+          <option value="3">Reversible Defect</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Navigasi -->
+    <div class="navigation-buttons">
+        <button type="button" class="btn btn-secondary" id="prevBtn">Sebelumnya</button>
+        <button type="button" class="btn btn-primary" id="nextBtn">Selanjutnya</button>
+    </div>
+  </form>
+</div>
+
+<script>
+  const steps = document.querySelectorAll(".step");
+  let currentStep = 0;
+
+  const showStep = (index) => {
+    steps.forEach((step, i) => {
+      step.classList.toggle("active", i === index);
+    });
+  };
+
+  document.getElementById("prevBtn").addEventListener("click", () => {
+    if (currentStep > 0) {
+      currentStep--;
+      showStep(currentStep);
+    }
+  });
+
+  document.getElementById("nextBtn").addEventListener("click", () => {
+    const currentInputs = steps[currentStep].querySelectorAll("input, select");
+    let valid = true;
+    currentInputs.forEach(input => {
+      if (!input.checkValidity()) {
+        input.reportValidity();
+        valid = false;
+      }
+    });
+
+    if (!valid) return;
+
+    if (currentStep < steps.length - 1) {
+      currentStep++;
+      showStep(currentStep);
+    } else {
+      document.getElementById("multiStepForm").submit();
+    }
+  });
+
+  showStep(currentStep);
+</script>
+
+</body>
+</html>

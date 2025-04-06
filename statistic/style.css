@@ -1,0 +1,8 @@
+.badge-fuzzy {
+    font-size: 0.9rem;
+    padding: 0.5em 0.75em;
+    border-radius: 12px;
+}
+.fuzzy-baik { background-color: #d4edda; color: #155724; }
+.fuzzy-sedang { background-color: #fff3cd; color: #856404; }
+.fuzzy-buruk { background-color: #f8d7da; color: #721c24; }

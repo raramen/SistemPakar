@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Hasil Analisis Risiko Penyakit Jantung</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .badge-fuzzy {
+            font-size: 0.9rem;
+            padding: 0.5em 0.75em;
+            border-radius: 12px;
+        }
+        .card-header {
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            padding-top: 30px;
+            padding-bottom: 30px;
+        }
+        .fuzzy-baik { background-color: #36c157; color: #ffffff; }
+        .fuzzy-sedang { background-color: #e0b227; color: #ffffff; }
+        .fuzzy-buruk { background-color: #db2f40; color: #ffffff; }
+        .fuzzy-pink {background-color: #FF3399; color: #ffffff; } /* Perempuan */
+        .fuzzy-blue { background-color: #3399FF; color: #ffffff; } /* Laki-laki */
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="mb-4 text-center text-danger">Hasil Analisis Risiko Penyakit Jantung</h2>
+
+        <div class="card mb-4">
+            <div class="card-header bg-danger text-white">Hasil Klasifikasi</div>
+            <div class="card-body text-center">
+                {% if prediction == 1 %}
+                    <h4 class="text-danger font-weight-bold">Berisiko Terkena Penyakit Jantung</h4>
+                {% else %}
+                    <h4 class="text-success font-weight-bold">Tidak Berisiko Terkena Penyakit Jantung</h4>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Fitur Numerik -->
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <div class="card-header bg-primary text-white">Fitur Numerik</div>
+                    <ul class="list-group list-group-flush">
+                        {% for key, value in responses.items() if key not in categorical_options %}
+                            {% set label = numerical_features.get(key, key.replace('_', ' ').capitalize()) %}
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span><strong>{{ label }}</strong></span>
+                                <span>
+                                    {{ value }}
+                                    {% if value is not none %}
+                                        {% set v = value | float %}
+                                        {% if key == 'age' %}
+                                            {% if v < 40 %}
+                                                <span class="badge-fuzzy fuzzy-baik">Muda</span>
+                                            {% elif 40 <= v <= 60 %}
+                                                <span class="badge-fuzzy fuzzy-sedang">Dewasa</span>
+                                            {% else %}
+                                                <span class="badge-fuzzy fuzzy-buruk">Lansia</span>
+                                            {% endif %}
+                                        {% elif key == 'chol' %}
+                                            {% if v < 200 %}
+                                                <span class="badge-fuzzy fuzzy-baik">Normal</span>
+                                            {% elif 200 <= v <= 240 %}
+                                                <span class="badge-fuzzy fuzzy-sedang">Borderline</span>
+                                            {% else %}
+                                                <span class="badge-fuzzy fuzzy-buruk">Tinggi</span>
+                                            {% endif %}
+                                        {% elif key == 'oldpeak' %}
+                                            {% if v < 1.0 %}
+                                                <span class="badge-fuzzy fuzzy-baik">Sedikit</span>
+                                            {% elif 1.0 <= v < 2.5 %}
+                                                <span class="badge-fuzzy fuzzy-sedang">Sedang</span>
+                                            {% else %}
+                                                <span class="badge-fuzzy fuzzy-buruk">Tinggi</span>
+                                            {% endif %}
+                                        {% elif key == 'thalach' %}
+                                            {% if v < 60 %}
+                                                <span class="badge-fuzzy fuzzy-baik">Rendah</span>
+                                            {% elif 60 <= v <= 100 %}
+                                                <span class="badge-fuzzy fuzzy-sedang">Normal</span>
+                                            {% else %}
+                                                <span class="badge-fuzzy fuzzy-buruk">Tinggi</span>
+                                            {% endif %}
+                                        {% elif key == 'sistol' %}
+                                            {% if v < 90 %}
+                                                <span class="badge-fuzzy fuzzy-buruk">Rendah</span>
+                                            {% elif 90 <= v <= 120 %}
+                                                <span class="badge-fuzzy fuzzy-baik">Normal</span>
+                                            {% else %}
+                                                <span class="badge-fuzzy fuzzy-buruk">Tinggi</span>
+                                            {% endif %}
+                                        {% elif key == 'diastol' %}
+                                            {% if v < 60 %}
+                                                <span class="badge-fuzzy fuzzy-buruk">Rendah</span>
+                                            {% elif 60 <= v <= 80 %}
+                                                <span class="badge-fuzzy fuzzy-baik">Normal</span>
+                                            {% else %}
+                                                <span class="badge-fuzzy fuzzy-buruk">Tinggi</span>
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endif %}
+                                </span>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Fitur Kategorikal -->
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <div class="card-header bg-info text-white">Fitur Kategorikal</div>
+                    <ul class="list-group list-group-flush">
+                        {% for key, value in responses.items() if key in categorical_options %}
+                            {% set label = categorical_features.get(key, key.replace('_', ' ').capitalize()) %}
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span><strong>{{ label }}</strong></span>
+                                <span>
+                                    {% if key == 'sex' %}
+                                        {% if value == '0' %}
+                                            <span class="badge-fuzzy fuzzy-pink">Perempuan</span>
+                                        {% else %}
+                                            <span class="badge-fuzzy fuzzy-blue">Laki-laki</span>
+                                        {% endif %}
+                                    {% elif key == 'cp' %}
+                                        {% set cp_labels = ['Tidak ada nyeri', 'Angina ringan', 'Angina sedang', 'Angina berat'] %}
+                                        {% set cp_colors = ['fuzzy-baik', 'fuzzy-sedang', 'fuzzy-buruk', 'fuzzy-buruk'] %}
+                                        <span class="badge-fuzzy {{ cp_colors[value|int] }}">
+                                            {{ cp_labels[value|int] }}
+                                        </span>
+                                    {% elif key == 'fbs' %}
+                                        {% if value == '1' %}
+                                            <span class="badge-fuzzy fuzzy-buruk">Gula Darah Tinggi</span>
+                                        {% else %}
+                                            <span class="badge-fuzzy fuzzy-baik">Normal</span>
+                                        {% endif %}
+                                    {% elif key == 'restecg' %}
+                                        {% set ecg_labels = ['Normal', 'Kelainan ST-T', 'Hipertrofi ventrikel kiri'] %}
+                                        {% set ecg_colors = ['fuzzy-baik', 'fuzzy-sedang', 'fuzzy-buruk'] %}
+                                        <span class="badge-fuzzy {{ ecg_colors[value|int] }}">
+                                            {{ ecg_labels[value|int] }}
+                                        </span>
+                                    {% elif key == 'exang' %}
+                                        {% if value == '1' %}
+                                            <span class="badge-fuzzy fuzzy-buruk">Ada Angina</span>
+                                        {% else %}
+                                            <span class="badge-fuzzy fuzzy-baik">Tidak Ada</span>
+                                        {% endif %}
+                                    {% elif key == 'slope' %}
+                                        {% set slope_labels = ['Menanjak', 'Datar', 'Menurun'] %}
+                                        {% set slope_colors = ['fuzzy-baik', 'fuzzy-sedang', 'fuzzy-buruk'] %}
+                                        <span class="badge-fuzzy {{ slope_colors[value|int] }}">
+                                            {{ slope_labels[value|int] }}
+                                        </span>
+                                    {% elif key == 'ca' %}
+                                        {% set ca_colors = ['fuzzy-baik', 'fuzzy-sedang', 'fuzzy-buruk', 'fuzzy-buruk'] %}
+                                        <span class="badge-fuzzy {{ ca_colors[value|int] }}">
+                                            {{ value }} Pembuluh darah
+                                        </span>
+                                    {% elif key == 'thal' %}
+                                        {% set thal_labels = ['-', 'Normal', 'Fixed Defect', 'Reversible Defect'] %}
+                                        {% set thal_colors = ['fuzzy-baik', 'fuzzy-baik', 'fuzzy-buruk', 'fuzzy-buruk'] %}
+                                        <span class="badge-fuzzy {{ thal_colors[value|int] }}">
+                                            {{ thal_labels[value|int] }}
+                                        </span>
+                                    {% else %}
+                                        {{ value }}
+                                    {% endif %}
+                                </span>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center">
+            <a href="/" class="btn btn-outline-secondary mt-3">Kembali ke Form</a>
+        </div>
+    </div>
+</body>
+</html>

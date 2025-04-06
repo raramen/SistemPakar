@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Form Analisis Penyakit Jantung</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h2 class="mb-4 text-center text-primary">Form Analisis Risiko Penyakit Jantung</h2>
+    <form action="/hasil" method="POST">
+        <!-- Input numerik -->
+        <div class="form-group">
+            <label>Age</label>
+            <input type="number" name="age" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label>Cholesterol (chol)</label>
+            <input type="number" name="chol" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label>Oldpeak</label>
+            <input type="number" step="0.1" name="oldpeak" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label>Thalach</label>
+            <input type="number" name="thalach" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label>Sistol</label>
+            <input type="number" name="sistol" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label>Diastol</label>
+            <input type="number" name="diastol" class="form-control" required>
+        </div>
+
+        <!-- Input kategorikal -->
+        <div class="form-group">
+            <label>Sex</label>
+            <select name="sex" class="form-control">
+                <option value="0">Perempuan</option>
+                <option value="1">Laki-laki</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>CP (Chest Pain)</label>
+            <input type="text" name="cp" class="form-control">
+        </div>
+        <div class="form-group">
+            <label>FBS</label>
+            <input type="text" name="fbs" class="form-control">
+        </div>
+        <div class="form-group">
+            <label>Restecg</label>
+            <input type="text" name="restecg" class="form-control">
+        </div>
+        <div class="form-group">
+            <label>Exang</label>
+            <input type="text" name="exang" class="form-control">
+        </div>
+        <div class="form-group">
+            <label>Slope</label>
+            <input type="text" name="slope" class="form-control">
+        </div>
+        <div class="form-group">
+            <label>CA</label>
+            <input type="text" name="ca" class="form-control">
+        </div>
+        <div class="form-group">
+            <label>Thal</label>
+            <input type="text" name="thal" class="form-control">
+        </div>
+
+        <button type="submit" class="btn btn-success btn-block">Analisis</button>
+    </form>
+</div>
+</body>
+</html>
