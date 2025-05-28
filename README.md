@@ -1,16 +1,20 @@
-# Project Sistem Pakar
+# 🫀 Sistem Pakar Identifikasi Risiko Penyakit Jantung
 
-Project sistem pakar identifikasi risiko penyakit jantung menggunakan bahasa pemrograman python 
+Project ini merupakan sistem pakar berbasis web yang digunakan untuk mengidentifikasi **risiko penyakit jantung** menggunakan bahasa pemrograman **Python** dan framework **Flask**.
 
+---
 
-Backend yang digunakan adalah penyakithari.py
+## 📁 Struktur File
 
-Form Analisis yang digunakan adalah newform.html
+- `penyakithari.py` — Backend utama menggunakan Flask.
+- `templates/newform.html` — Halaman form input analisis.
+- `templates/newoutput.html` — Halaman hasil analisis.
 
-Hasil Analisis yang digunakan adalah newoutput.html
+---
 
+## ⚙️ Cara Menjalankan Project
 
-Cara menjalankan project, instalasi library terlebih dahulu
-
-Lalu jalankan flask dengan syntax 
-'python penyakithari.py'
+1. **Clone repository ini** (jika dari GitHub):
+   ```bash
+   git clone https://github.com/username/nama-repo.git
+   cd nama-repo
