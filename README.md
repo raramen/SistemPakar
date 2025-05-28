@@ -12,4 +12,5 @@ Hasil Analisis yang digunakan adalah newoutput.html
 
 Cara menjalankan project, instalasi library terlebih dahulu
 
-Lalu jalankan flask dengan syntax "python penyakithari.py"
+Lalu jalankan flask dengan syntax 
+'python penyakithari.py'
